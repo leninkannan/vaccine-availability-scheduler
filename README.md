@@ -1,6 +1,7 @@
 **vaccine-availability-scheduler**
 
-It provides the vaccine slots availability by every 10 seconds for given the postcodes.
+It provides the vaccine slots availability by every 10 seconds for the given postcodes.
+Beep sounds will be generated if slots are available.
 
 *Follow below steps to run the program*
 
