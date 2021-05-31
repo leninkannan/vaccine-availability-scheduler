@@ -15,17 +15,17 @@ https://www.java.com/en/download/help/windows_manual_download.html
 
 _For age 18+ and For dose 1_
 
-     java -Dmin-age-limit=18 -Ddose=1 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
+ java -Dmin-age-limit=18 -Ddose=1 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
      
 
 _For age 18+ and For dose 2_
 
-     java -Dmin-age-limit=18 -Ddose=2 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
+ java -Dmin-age-limit=18 -Ddose=2 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
 
 _For age 45+ and For dose 1_
 
-     java -Dmin-age-limit=45 -Ddose=1 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
+ java -Dmin-age-limit=45 -Ddose=1 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
 
 _For age 45+ and For dose 2_
 
-     java -Dmin-age-limit=45 -Ddose=2 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
+ java -Dmin-age-limit=45 -Ddose=2 -Dpincodes=600095,600096 -jar vaccine-availability-scheduler-0.0.2.jar
