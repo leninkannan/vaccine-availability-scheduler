@@ -15,6 +15,10 @@ public class AvailableSlots {
         return hiddenBuilder();
     }
 
+    public int count() {
+        return slots.size();
+    }
+
     public void print() {
         System.out.println(toString());
     }

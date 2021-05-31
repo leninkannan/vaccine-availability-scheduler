@@ -19,5 +19,4 @@ public class VaccineAvailabilitySchedulerApplication {
     public RestTemplate restTemplate() {
         return new RestTemplate(new SimpleClientHttpRequestFactory());
     }
-
 }

@@ -1,12 +1,9 @@
 package com.example.vaccineavailabilityscheduler.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Slf4j
 @Data
@@ -21,12 +18,6 @@ public class Slot implements Serializable {
     public Slot() {
         super();
     }
-    public boolean isAvailableForDose1ForAbove18() {
-        return min_age_limit == 18 && available_capacity > 0 && available_capacity_dose1 > 0;
-    }
-    public boolean isAvailableForAbove18() {
-        return min_age_limit == 18 && available_capacity > 0;
-    }
 
     public AvailableSlot toAvailableSlot(String name) {
         return AvailableSlot
@@ -39,5 +30,16 @@ public class Slot implements Serializable {
                 .available_capacity_dose1(this.available_capacity_dose1)
                 .available_capacity_dose2(this.available_capacity_dose2)
                 .build();
+    }
+
+    public boolean isAvailableFor(int ageLimit, int dose) {
+        return (min_age_limit == ageLimit) && (available_capacity > 0)
+                && isAvailableFor(dose);
+    }
+
+    private boolean isAvailableFor(int dose) {
+        return (dose == 1) ?
+                (available_capacity_dose1 > 0)
+                : (available_capacity_dose2 > 0);
     }
 }

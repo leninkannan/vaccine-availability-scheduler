@@ -1,14 +1,12 @@
 package com.example.vaccineavailabilityscheduler.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.server.session.InMemoryWebSessionStore;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Data
@@ -22,19 +20,16 @@ public class Center implements Serializable {
         super();
     }
 
-    public boolean isAvailableForDose1ForAbove18() {
-        return sessions.stream().filter(Slot::isAvailableForDose1ForAbove18).findFirst().isPresent();
-    }
-    public boolean isAvailableForAbove18() {
-        return sessions.stream().filter(Slot::isAvailableForAbove18).findFirst().isPresent();
+    public  boolean isAvailableFor(int ageLimit, int dose) {
+        return sessions.stream().anyMatch(slot-> slot.isAvailableFor(ageLimit,dose));
     }
 
-    public AvailableSlots toAvailableSlotsForDose1AndForAbove18() {
-        List<AvailableSlot> slots = sessions.stream().filter(Slot::isAvailableForDose1ForAbove18).map(slot -> slot.toAvailableSlot(name)).collect(Collectors.toList());
-        return AvailableSlots.builder().slots(slots).build();
-    }
-    public AvailableSlots toAvailableSlotsForAbove18() {
-        List<AvailableSlot> slots = sessions.stream().filter(Slot::isAvailableForAbove18).map(slot -> slot.toAvailableSlot(name)).collect(Collectors.toList());
+    public AvailableSlots toAvailableSlotsFor(int ageLimit, int dose) {
+        List<AvailableSlot> slots = sessions
+                .stream()
+                .filter(slot -> slot.isAvailableFor(ageLimit,dose))
+                .map(slot -> slot.toAvailableSlot(name))
+                .collect(toList());
         return AvailableSlots.builder().slots(slots).build();
     }
 }

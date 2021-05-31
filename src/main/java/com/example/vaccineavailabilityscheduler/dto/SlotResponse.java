@@ -17,27 +17,33 @@ public class SlotResponse implements Serializable {
     public SlotResponse() {
         super();
     }
-    public long availableSlots() {
-        List<Center> availableCenters = centers.stream().filter(Center::isAvailableForDose1ForAbove18).collect(toList());
-        long totalCount = availableCenters.stream().mapToLong(center -> center.getSessions().stream().filter(Slot::isAvailableForDose1ForAbove18).mapToLong(Slot::getAvailable_capacity_dose1).sum()).sum();
-        return totalCount;
-    }
-    public AvailableSlots getAvailableSlotsForDose1ForAbove18() {
-        List<Center> availableCenters = centers.stream().filter(Center::isAvailableForDose1ForAbove18).collect(toList());
-        List<AvailableSlots> availableSlotsList = availableCenters.stream().map(center -> center.toAvailableSlotsForDose1AndForAbove18()).collect(toList());
-        List<AvailableSlot> availableSlots  = new ArrayList<>();
-        availableSlotsList.stream().forEach(slotsList -> availableSlots.addAll(slotsList.getSlots()) );
-        return AvailableSlots.builder().slots(availableSlots).build();
+
+    public boolean isAvailableFor(int ageLimit, int dose) {
+       return centers
+               .stream()
+               .anyMatch(center->center.isAvailableFor(ageLimit,dose));
     }
 
-    public boolean isSlotAvailablesFor18Above() {
-        return centers.stream().filter((center -> center.isAvailableForAbove18())).findFirst().isPresent();
-    }
-    public AvailableSlots getAvailableSlotsForAbove18() {
-        List<Center> availableCenters = centers.stream().filter(Center::isAvailableForAbove18).collect(toList());
-        List<AvailableSlots> availableSlotsList = availableCenters.stream().map(center -> center.toAvailableSlotsForAbove18()).collect(toList());
+    public AvailableSlots getAvailableSlotsFor(int ageLimit, int dose) {
         List<AvailableSlot> availableSlots  = new ArrayList<>();
-        availableSlotsList.stream().forEach(slotsList -> availableSlots.addAll(slotsList.getSlots()) );
-        return AvailableSlots.builder().slots(availableSlots).build();
+
+        List<Center> availableCenters = centers
+                .stream()
+                .filter(center -> center.isAvailableFor(ageLimit, dose))
+                .collect(toList());
+
+        List<AvailableSlots> availableSlotsList = availableCenters
+                .stream()
+                .map(center -> center.toAvailableSlotsFor(ageLimit,dose))
+                .collect(toList());
+
+        availableSlotsList
+                .stream()
+                .forEach(slotsList -> availableSlots.addAll(slotsList.getSlots()) );
+
+        return AvailableSlots
+                .builder()
+                .slots(availableSlots)
+                .build();
     }
 }
